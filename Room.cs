@@ -10,11 +10,13 @@ namespace RPG_Final
     {
         string description = "";
         Encounter encounter;
+        int[] navTable = new int[4];
 
-        public Room(string description, Encounter encounter)
+        public Room(string description, Encounter encounter, int[] navTable)
         {
             this.description = description;
             this.encounter = encounter;
+            this.navTable = navTable;
         }
     }
 }

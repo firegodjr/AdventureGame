@@ -8,6 +8,14 @@ namespace RPG_Final
 {
     class Player_Stats
     {
+        public enum Weapon
+        {
+            WOODSWORD,
+            IRONSWORD,
+            GOLDSWORD,
+            DIAMONDSWORD
+        }
+
         //starting strength
         int strength = 50;
 
@@ -20,7 +28,9 @@ namespace RPG_Final
         //starting health
         int health = 100;
 
-        string name = getName();        
+        Weapon equippedWeapon = 0;
+
+        string name = getName();
 
         public static string getName()
         {
@@ -29,12 +39,12 @@ namespace RPG_Final
             string name = Console.ReadLine();
             return name;
         }
-        
+
 
         public static void beginningMessage(string name, int strength, int money, int hunger, int health)
         {
             //prints 1st message at beginning of game
-            Console.WriteLine(name + "Your strength is " + strength + "\nYou have " + money + "\nYour hunger is " + hunger + "\nYour helath is " + health);
+            Console.WriteLine(name + "Your strength is " + strength + "\nYou have " + money + "\nYour hunger is " + hunger + "\nYour health is " + health);
         }
 
         int apple = 0;
@@ -255,6 +265,19 @@ namespace RPG_Final
             set
             {
                 name = value;
+            }
+        }
+
+        internal Weapon EquippedWeapon
+        {
+            get
+            {
+                return equippedWeapon;
+            }
+
+            set
+            {
+                equippedWeapon = value;
             }
         }
     }
