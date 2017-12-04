@@ -5,6 +5,24 @@ namespace RPG_Final
 {
     public static class TextWriter
     {
+        /*
+            Codes:
+            %0 - Gray (default)
+            %1 - DarkGray
+            %2 - Red
+            %3 - Green
+            %4 - Cyan
+            %5 - Yellow
+
+            ` - Delay as if there was a period.
+
+            use '\' to escape a character, so 
+                %2hi 
+            will draw 'hi' in red, but 
+                \%2hi 
+            will draw '%2hi' in the normal color.)
+        */
+
         public static void Write(string str, int delay = 20)
         {
             Console.Write("\n");
@@ -47,7 +65,7 @@ namespace RPG_Final
                 {
                     Thread.Sleep(10 * delay);
                 }
-                else if(str[i] == ',' || str[i] == '.' || str[i] == '!')
+                else if(str[i] == ',' || str[i] == '.' || str[i] == '!' || str[i] == '?')
                 {
                     Console.Write(str[i]);
                     Thread.Sleep(10 * delay);
