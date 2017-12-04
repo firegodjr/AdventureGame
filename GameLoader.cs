@@ -8,7 +8,7 @@ namespace RPG_Final
 {
     static class GameLoader
     {
-        static public void LoadWorld(string filepath)
+        static public void LoadWorld(Game game, string filepath)
         {
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreWhitespace = true;
@@ -32,21 +32,36 @@ namespace RPG_Final
                         int monsterHealth = reader.ReadElementContentAsInt();
                         int gold = reader.ReadElementContentAsInt();
                         List<string> attackNames = new List<string>();
+                        List<int> attackProbabilities = new List<int>();
                         List<int> attackDamages = new List<int>();
+                        List<string> abilityNames = new List<string>();
+                        List<int> abilityProbabilities = new List<int>();
+                        List<string> abilityMods = new List<string>();
 
                         reader.ReadStartElement();
                         while (reader.Name == "att")
                         {
                             string[] attack = reader.ReadElementContentAsString().Split(':');
-                            attackNames.Add(attack[0]);
-                            attackDamages.Add(Convert.ToInt32(attack[1]));
+                            attackProbabilities.Add(Convert.ToInt32(attack[0]));
+                            attackNames.Add(attack[1]);
+                            attackDamages.Add(Convert.ToInt32(attack[2]));
+                        }
+                        reader.ReadEndElement();
+
+                        reader.ReadStartElement();
+                        while (reader.Name == "att")
+                        {
+                            string[] attack = reader.ReadElementContentAsString().Split(':');
+                            abilityProbabilities.Add(Convert.ToInt32(attack[0]));
+                            abilityNames.Add(attack[1]);
+                            abilityMods.Add(attack[2]);
                         }
                         reader.ReadEndElement();
 
                         string win = reader.ReadElementContentAsString();
                         string lose = reader.ReadElementContentAsString();
 
-                        encounters.Add(new Encounter(monsterName, monsterHealth, gold, announcement, win, lose, attackNames.ToArray(), attackDamages.ToArray()));
+                        encounters.Add(new Encounter(monsterName, monsterHealth, gold, announcement, win, lose, attackNames.ToArray(), attackDamages.ToArray(), attackProbabilities.ToArray(), abilityNames.ToArray(), abilityMods.ToArray(), abilityProbabilities.ToArray()));
                         break;
                     case "room":
                         reader.ReadStartElement();
@@ -63,14 +78,14 @@ namespace RPG_Final
                             Convert.ToInt32(navStrings[3])
                         };
 
-                        Room room = new Room(desc, encounters[encIndex], navTable); //TODO: get the Encounter from the Encounter array
+                        Room room = new Room(desc, encIndex, navTable);
                         reader.ReadEndElement();
                         break;
                 }
             }
 
-            Game.encounters = encounters.ToArray();
-            Game.rooms = rooms.ToArray();
+            game.encounters = encounters.ToArray();
+            game.rooms = rooms.ToArray();
         }
     }
 }

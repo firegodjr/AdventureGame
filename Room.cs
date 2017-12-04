@@ -9,10 +9,10 @@ namespace RPG_Final
     class Room
     {
         string description = "";
-        Encounter encounter;
+        int encounter;
         int[] navTable = new int[4];
 
-        public Room(string description, Encounter encounter, int[] navTable)
+        public Room(string description, int encounter, int[] navTable)
         {
             this.description = description;
             this.encounter = encounter;

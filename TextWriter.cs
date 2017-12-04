@@ -39,7 +39,7 @@ namespace RPG_Final
                 {
                     Console.Write(str[++i]);
                 }
-                else if(str[i] == ' ' && i % Console.BufferWidth > 70)
+                else if(str[i] == ' ' && Console.CursorLeft % Console.BufferWidth > 70)
                 {
                     Console.Write("\n");
                 }
