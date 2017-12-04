@@ -1,0 +1,72 @@
+<game>
+	<encounter>
+		<announce>Nick appears, ready to Make America Great Again!</announce>
+		<name>Nick</name>
+		<health>9999</health>
+		<gold>999</gold>
+		<attacks>
+			<att>5:Flips You Off:0</att>
+			<att>5:Licks:0</att>
+			<att>5:Is Sarcastic:0</att>
+			<att>1:%2D`a`b`s`.`:20</att>
+		</attacks>
+		<abilities>
+		</abilities>
+		<win>You dab back.` Nick's face explodes.</win>
+		<lose>Your ears explode from the earrape.` And then your face.` And then you die.` The castle explodes.</lose>
+	</encounter>
+	<encounter>
+		<announce>Tommy appears. He is not playing games.</announce>
+		<name>Tommy</name>
+		<health>9999</health>
+		<gold>999</gold>
+		<attacks>
+			<att>1:Plays games!:4</att>
+			<att>1:Yells. N`O` G`A`M`E`S`!:20</att>
+		</attacks>
+		<abilities>
+		</abilities>
+		<win>Tommy is triggered. You win!</win>
+		<lose>Tommy screams so loud you instantly stop playing this game.` You lose.</lose>
+	</encounter>
+	<encounter>
+		<announce>%2NICO NICO NIIIIIII...%0 Ashlynne is here!</announce>
+		<name>Ashlynne</name>
+		<health>9999</health>
+		<gold>999</gold>
+		<attacks>
+			<att>1:%0smiles. %4"Omae wa mou... shindeiru."%0 You scream "NANI!?":10</att>
+			<att>3:%0fires %2Nico Nico Beam%0:10</att>
+			<att>5:Plays vocaloid music:5</att>
+		</attacks>
+		<abilities>
+		</abilities>
+		<win>Ashlynne falls. "Yare yare daze..." you mutter.</win>
+		<lose>You have been consumed by Japan.</lose>
+	</encounter>
+	<encounter>
+		<announce>"Wib appears!"</announce>
+		<name>Wibbenmeyer</name>
+		<health>9999</health>
+		<gold>999</gold>
+		<attacks>
+			<att>5:REEEEEEEEEEs:5</att>
+			<att>3:summons a puppet, which attacks:10</att>
+		</attacks>
+		<abilities>
+			<att>1:%0mutters` %4"Oof."%0:h20</att>
+		</abilities>
+		<win>You defeat Wibbenmeyer, who lets out a final `"oof". You inherit the title of Puppet Master.</win>
+		<lose>Wibbenmeyer emits a victory REEEE. You are forced to kneel, and pledge to eternal servitude.</lose>
+	</encounter>
+	<room>
+		<desc>Incredibly, this room is loaded from a file. There is a door to the north. It leads right back here.</desc>
+		<enc>0</enc>
+		<keys>-1:-1:-1:-1</keys>
+		<nav>0:0:-1:-1</nav>
+	</room>
+	<item>
+		<name>Key</name>
+		<meta>0</meta>
+	</item>
+</game>
