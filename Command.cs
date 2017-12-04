@@ -8,7 +8,7 @@ namespace RPG_Final
 {
     class Command
     {
-        string move;
+        string move = "";
 
         //gets the user input
         public void Input()
@@ -92,6 +92,19 @@ namespace RPG_Final
         public void Help()
         {
             Console.WriteLine("To move South type s. \nTo move East type e. \nTo move West type w. \nTo move North type n. \nTo buy stuff type b. \nTo eat food type c. \nTo run from battle type r. \nTo Fight the monster type f. \nTo get player stats type ps or stats \nTo check your Inventory type i. \nTo grab an item type g. \nTo check your Location type l.");
+        }
+
+        public string Move
+        {
+            get
+            {
+                return move;
+            }
+
+            set
+            {
+                move = value;
+            }
         }
     }
 }
