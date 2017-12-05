@@ -6,17 +6,37 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    class Room
+    public class Room
     {
-        string description = "";
-        int encounter;
-        int[] navTable = new int[4];
+        public string name = "";
+        public string description = "";
+        public int encounter;
+        public int[] navTable = new int[4];
+        public int[] keyTable = new int[4];
 
-        public Room(string description, int encounter, int[] navTable)
+        public Room(string name, string description, int encounter, int[] navTable, int[] keyTable)
         {
+            this.name = name;
             this.description = description;
             this.encounter = encounter;
             this.navTable = navTable;
+            this.keyTable = keyTable;
+        }
+
+        public bool GetCanProgress(Player_Stats ps, Directions direction)
+        {
+            //TODO: CHECK THAT PLAYER HAS KEY THAT CONTAINS NEEDED METADATA
+            //eg. 
+            //
+            //  foreach (Item i in ps.items) 
+            //  { 
+            //      if (i.type == ItemType.KEY && i.metadata == keyMetas[(int)direction]) 
+            //      { 
+            //          return true 
+            //      }
+            //  }
+
+            return true;
         }
     }
 }

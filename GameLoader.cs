@@ -16,6 +16,7 @@ namespace RPG_Final
 
             List<Encounter> encounters = new List<Encounter>();
             List<Room> rooms = new List<Room>();
+            List<Item> items = new List<Item>();
 
             while(reader.Read())
             {
@@ -37,6 +38,7 @@ namespace RPG_Final
                         List<string> abilityNames = new List<string>();
                         List<int> abilityProbabilities = new List<int>();
                         List<string> abilityMods = new List<string>();
+                        List<int> itemRewards = new List<int>();
 
                         reader.ReadStartElement();
                         while (reader.Name == "att")
@@ -58,19 +60,32 @@ namespace RPG_Final
                         }
                         reader.ReadEndElement();
 
+                        reader.ReadStartElement();
+                        while (reader.Name == "reward")
+                        {
+                            string[] itemString = reader.ReadElementContentAsString().Split(':');
+                            for (int i = 0; i < Convert.ToInt32(itemString[0]); ++i)
+                            {
+                                itemRewards.Add(Convert.ToInt32(itemString[1]));
+                            }
+                        }
+                        reader.ReadEndElement();
+
                         string win = reader.ReadElementContentAsString();
                         string lose = reader.ReadElementContentAsString();
 
-                        encounters.Add(new Encounter(monsterName, monsterHealth, gold, announcement, win, lose, attackNames.ToArray(), attackDamages.ToArray(), attackProbabilities.ToArray(), abilityNames.ToArray(), abilityMods.ToArray(), abilityProbabilities.ToArray()));
+                        encounters.Add(new Encounter(monsterName, monsterHealth, gold, itemRewards.ToArray(), announcement, win, lose, attackNames.ToArray(), attackDamages.ToArray(), attackProbabilities.ToArray(), abilityNames.ToArray(), abilityMods.ToArray(), abilityProbabilities.ToArray()));
                         break;
                     case "room":
                         reader.ReadStartElement();
 
+                        string roomName = reader.ReadElementContentAsString();
                         string desc = reader.ReadElementContentAsString();
                         int encIndex = reader.ReadElementContentAsInt();
+                        string[] keyStrings = reader.ReadElementContentAsString().Split(':');
                         string[] navStrings = reader.ReadElementContentAsString().Split(':');
 
-                        int[] navTable = new int[] 
+                        int[] keyMetas = new int[]
                         {
                             Convert.ToInt32(navStrings[0]),
                             Convert.ToInt32(navStrings[1]),
@@ -78,14 +93,31 @@ namespace RPG_Final
                             Convert.ToInt32(navStrings[3])
                         };
 
-                        Room room = new Room(desc, encIndex, navTable);
-                        reader.ReadEndElement();
+                        int[] navTable = new int[]
+                        {
+                            Convert.ToInt32(navStrings[0]),
+                            Convert.ToInt32(navStrings[1]),
+                            Convert.ToInt32(navStrings[2]),
+                            Convert.ToInt32(navStrings[3])
+                        };
+
+                        Room room = new Room(roomName, desc, encIndex, navTable, keyMetas);
+                        break;
+                    case "item":
+                        reader.ReadStartElement();
+                        string itemname = reader.ReadElementContentAsString();
+                        ItemTypes type = (ItemTypes)reader.ReadElementContentAsInt();
+                        int itemmeta = reader.ReadElementContentAsInt();
+
+                        Item item = new Item(itemname, type, itemmeta);
+                        items.Add(item);
                         break;
                 }
             }
 
             game.encounters = encounters.ToArray();
             game.rooms = rooms.ToArray();
+            game.items = items.ToArray();
         }
     }
 }

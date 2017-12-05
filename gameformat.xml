@@ -12,6 +12,8 @@
 		</attacks>
 		<abilities>
 		</abilities>
+		<items>
+		</items>
 		<win>You dab back.` Nick's face explodes.</win>
 		<lose>Your ears explode from the earrape.` And then your face.` And then you die.` The castle explodes.</lose>
 	</encounter>
@@ -26,6 +28,8 @@
 		</attacks>
 		<abilities>
 		</abilities>
+		<items>
+		</items>
 		<win>Tommy is triggered. You win!</win>
 		<lose>Tommy screams so loud you instantly stop playing this game.` You lose.</lose>
 	</encounter>
@@ -41,6 +45,8 @@
 		</attacks>
 		<abilities>
 		</abilities>
+		<items>
+		</items>
 		<win>Ashlynne falls. "Yare yare daze..." you mutter.</win>
 		<lose>You have been consumed by Japan.</lose>
 	</encounter>
@@ -56,10 +62,14 @@
 		<abilities>
 			<att>1:%0mutters` %4"Oof."%0:h20</att>
 		</abilities>
+		<items>
+			<reward>0</reward>
+		</items>
 		<win>You defeat Wibbenmeyer, who lets out a final `"oof". You inherit the title of Puppet Master.</win>
 		<lose>Wibbenmeyer emits a victory REEEE. You are forced to kneel, and pledge to eternal servitude.</lose>
 	</encounter>
 	<room>
+		<name>File Room</name>
 		<desc>Incredibly, this room is loaded from a file. There is a door to the north. It leads right back here.</desc>
 		<enc>0</enc>
 		<keys>-1:-1:-1:-1</keys>
@@ -67,6 +77,27 @@
 	</room>
 	<item>
 		<name>Key</name>
+		<type>2</type>
+		<meta>0</meta>
+	</item>
+	<item>
+		<name>Key</name>
+		<type>2</type>
+		<meta>0</meta>
+	</item>
+	<item>
+		<name>Key</name>
+		<type>2</type>
+		<meta>0</meta>
+	</item>
+	<item>
+		<name>Key</name>
+		<type>2</type>
+		<meta>0</meta>
+	</item>
+	<item>
+		<name>Key</name>
+		<type>2</type>
 		<meta>0</meta>
 	</item>
 </game>
