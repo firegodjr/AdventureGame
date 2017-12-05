@@ -48,7 +48,10 @@ namespace RPG_Final
                             attackNames.Add(attack[1]);
                             attackDamages.Add(Convert.ToInt32(attack[2]));
                         }
-                        reader.ReadEndElement();
+                        if(attackNames.Count > 0)
+                        {
+                            reader.ReadEndElement();
+                        }
 
                         reader.ReadStartElement();
                         while (reader.Name == "att")
@@ -58,7 +61,10 @@ namespace RPG_Final
                             abilityNames.Add(attack[1]);
                             abilityMods.Add(attack[2]);
                         }
-                        reader.ReadEndElement();
+                        if(abilityNames.Count > 0)
+                        {
+                            reader.ReadEndElement();
+                        }
 
                         reader.ReadStartElement();
                         while (reader.Name == "reward")
@@ -69,7 +75,10 @@ namespace RPG_Final
                                 itemRewards.Add(Convert.ToInt32(itemString[1]));
                             }
                         }
-                        reader.ReadEndElement();
+                        if(itemRewards.Count > 0)
+                        {
+                            reader.ReadEndElement();
+                        }
 
                         string win = reader.ReadElementContentAsString();
                         string lose = reader.ReadElementContentAsString();

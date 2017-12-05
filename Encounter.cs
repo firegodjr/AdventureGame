@@ -132,7 +132,7 @@ namespace RPG_Final
                 if (attIndex >= attackProbabilities.Length)
                 {
                     attIndex -= attackProbabilities.Length;
-                    UseAbility(abilityNames[attIndex], abilityModifiers[attIndex], ref health, ref rewardGold);
+                    UseAbility(abilityNames[attIndex], abilityModifiers[attIndex], ps, ref health, ref rewardGold);
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace RPG_Final
         public int GetIndexFromProbability(int randomnum)
         {
             int currAttackProbTotal = 0;
-            for(int i = 0; currAttackProbTotal < randomnum; ++i)
+            for(int i = 0; currAttackProbTotal <= randomnum; ++i)
             {
                 if(i < attackProbabilities.Length)
                 {
@@ -200,22 +200,25 @@ namespace RPG_Final
             return -1;
         }
 
-        public void UseAbility(string abilityName, string abilityModifier, ref int health, ref int gold)
+        public void UseAbility(string abilityName, string abilityModifier, Player_Stats ps, ref int health, ref int gold)
         {
             string mod = abilityModifier.Substring(0, 1);
             int amnt = Convert.ToInt32(abilityModifier.Substring(1));
             switch(mod)
             {
                 case "h":
-                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and recovers {amnt} health. %4{enemyName}%0's health is now %3{health}%0!");
                     health += amnt;
+                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and recovers {amnt} health. %4{enemyName}%0's health is now %3{health}%0!");
                     break;
                 case "g":
-                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and {(amnt < 0 ? "spends" : "gains")} {amnt} gold! %4{enemyName}%0 now has %5{gold} gold%0.");
                     gold += amnt;
+                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and {(amnt < 0 ? "gives you" : "takes")} {amnt} gold! %4{enemyName}%0 you now have %5{ps.Money} gold%0.");
                     break;
                 case "s":
-                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and swaps your health with theirs! %5{enemyName}%0 now has %3{health}%0 health and you now have %3{enemyHealth}%0 health.");
+                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and swaps your health with theirs! %5{enemyName}%0 now has %3{ps.Health}%0 health and you now have %3{enemyHealth}%0 health.");
+                    int healthswap = ps.Health;
+                    ps.Health = enemyHealth;
+                    enemyHealth = healthswap;
                     break;
             }
         }
