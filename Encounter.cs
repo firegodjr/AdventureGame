@@ -8,7 +8,8 @@ namespace RPG_Final
 {
     class Encounter
     {
-        //"A dragon attacks" or something
+        bool completed = false;
+
         string announcement;
         string enemyName;
         string win, lose;
@@ -20,8 +21,9 @@ namespace RPG_Final
         string[] abilityModifiers;
         int enemyHealth;
         int rewardGold;
+        int[] itemrewards;
 
-        public Encounter(string enemyName, int enemyHealth, int rewardGold, string announcement, string win, string lose, string[] attackNames, int[] attackBaseDamages, int[] attackProbabilities, string[] abilityNames, string[] abilityModifiers, int[] abilityProbabilities)
+        public Encounter(string enemyName, int enemyHealth, int rewardGold, int[] itemrewards, string announcement, string win, string lose, string[] attackNames, int[] attackBaseDamages, int[] attackProbabilities, string[] abilityNames, string[] abilityModifiers, int[] abilityProbabilities)
         {
             this.announcement = announcement;
             this.enemyHealth = enemyHealth;
@@ -35,69 +37,87 @@ namespace RPG_Final
             this.win = win;
             this.lose = lose;
             this.rewardGold = rewardGold;
+            this.itemrewards = itemrewards;
         }
 
         //Does the encounter
         public void PerformEncounter(Player_Stats ps)
         {
-            int enemyRepeat = 0;
-            int playerRepeat = 0;
-            Random random = new Random();
-            int health = enemyHealth;
-            TextWriter.Write(announcement);
-            while(health > 0 && ps.Health > 0)
+            if(!completed)
             {
-                if (random.Next(2) == 1 && playerRepeat < 2)
+                int enemyRepeat = 0;
+                int playerRepeat = 0;
+                Random random = new Random();
+                int health = enemyHealth;
+                TextWriter.Write(announcement);
+
+                //While nobody is dead
+                while (health > 0 && ps.Health > 0)
                 {
-                    playerRepeat++;
-                    if(enemyRepeat >= 2)
+                    //Randomize whether or not the player attacks
+                    //Also make sure the player hasn't attacked more than once already
+                    if (random.Next(2) == 1 && playerRepeat < 2)
                     {
-                        enemyRepeat = 0;
+                        //Increase the count of times the player attacked
+                        playerRepeat++;
+
+                        //Reset the count of times the enemy attacked
+                        if (enemyRepeat >= 2)
+                        {
+                            enemyRepeat = 0;
+                        }
+
+                        int damage = PlayerAttack(ps, random, health);
+                        health -= damage;
+
+                        if (health < 0)
+                        {
+                            health = 0;
+                        }
+
+                        if (damage > 0)
+                        {
+                            TextWriter.Write($"%5{enemyName}%0's health is now %3{health}%0!");
+                        }
+                    }
+                    //Make sure the enemy hasn't attacked more than once already
+                    else if (enemyRepeat < 2)
+                    {
+                        //Increase the count of times the enemy attacked
+                        enemyRepeat++;
+
+                        //Reset the count of times the player attacked
+                        if (playerRepeat >= 2)
+                        {
+                            playerRepeat = 0;
+                        }
+
+                        int damage = EnemyAttack(ps, random, ref health);
+                        ps.Health -= damage;
+
+                        if (ps.Health < 0)
+                        {
+                            ps.Health = 0;
+                        }
+
+                        if (damage > 0)
+                        {
+                            TextWriter.Write($"Your health is now %3{ps.Health}%0.");
+                        }
                     }
 
-                    int damage = PlayerAttack(ps, random, health);
-                    health -= damage;
-
-                    if(health < 0)
+                    if (health <= 0)
                     {
-                        health = 0;
+                        TextWriter.Write(win);
+                        TextWriter.Write($"You gain %5{rewardGold} gold%0!");
+                        //TODO: GIVE PLAYER ITEM REWARDS
+                        //foreach (Item i in itemrewards)
+                        //  ps.GiveItem(i)
                     }
-
-                    if(damage > 0)
+                    else if (ps.Health <= 0)
                     {
-                        TextWriter.Write($"%5{enemyName}%0's health is now %3{health}%0!");
+                        TextWriter.Write(lose);
                     }
-                }
-                else if(enemyRepeat < 2)
-                {
-                    enemyRepeat++;
-                    if(playerRepeat >= 2)
-                    {
-                        playerRepeat = 0;
-                    }
-
-                    int damage = EnemyAttack(ps, random, ref health);
-                    ps.Health -= damage;
-
-                    if(ps.Health < 0)
-                    {
-                        ps.Health = 0;
-                    }
-
-                    if(damage > 0)
-                    {
-                        TextWriter.Write($"Your health is now %3{ps.Health}%0.");
-                    }
-                }
-
-                if(health <= 0)
-                {
-                    TextWriter.Write(win);
-                    TextWriter.Write($"You gain %5{rewardGold} gold%0!");
-                }
-                else if(ps.Health <= 0)
-                {
-                    TextWriter.Write(lose);
                 }
             }
         }
@@ -193,6 +213,9 @@ namespace RPG_Final
                 case "g":
                     TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and {(amnt < 0 ? "spends" : "gains")} {amnt} gold! %4{enemyName}%0 now has %5{gold} gold%0.");
                     gold += amnt;
+                    break;
+                case "s":
+                    TextWriter.Write($"%5{enemyName}%0 %4{abilityName}%0 and swaps your health with theirs! %5{enemyName}%0 now has %3{health}%0 health and you now have %3{enemyHealth}%0 health.");
                     break;
             }
         }
