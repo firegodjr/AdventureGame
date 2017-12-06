@@ -10,17 +10,45 @@ namespace RPG_Final
     {
         string move = "";
 
-        //gets the user input
+        //gets the user 
+        public void Eat()
+        {
+            int apple = Player_Stats.apple;
+            int bread = Player_Stats.bread;
+            int cake = Player_Stats.cake;
+            string foodInput = "";
+            TextWriter.Write("Would you like to consume apple(A), bread(B), or cake(C)");
+            foodInput = Console.ReadLine();
+            if (foodInput == "a" || foodInput == "A")
+            {
+                Player_Stats.apple -= 1;
+                Player_Stats.hunger += 5;
+            }
+            else if (foodInput == "b" || foodInput == "B")
+            {
+                Player_Stats.bread -= 1;
+                Player_Stats.hunger += 25;
+            }
+            else if (foodInput == "c" || foodInput == "C")
+            {
+                Player_Stats.cake -= 1;
+                Player_Stats.hunger += 50;
+            }
+        }
+        public void Buy()
+        {
+            TextWriter.Write("What weapon would you like to buy: \n1.Wood Sword: Damage = +5, Cost = $15\n2.Iron Sword: Damage = +10, Cost = $30\n3.Gold Sword: Damage = +15, Cost = $60\n4.Diamond Sword: Damage = +25, Cost = $100\n5.Armor: +5 Damage Redcued, Cost = $100\n6Magic Amulet: 1 Revive, Cost = $75");
+        }
         public void Input()
         {
             int x = 0;
             while (x == 0)
             {
-                Console.WriteLine("");
+                TextWriter.Write("");
                 string input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input))
                 {
-                    Console.WriteLine("Error, What you entered is not acceptable. You haven't entered anything. Try again.\n");
+                    TextWriter.Write("Error, What you entered is not acceptable. You haven't entered anything. Try again.\n");
                 }
                 else
                 {
@@ -72,16 +100,12 @@ namespace RPG_Final
                         case "I":
                             CheckInventory();
                             break;
-                        case "GRAB":
-                        case "G":
-                            Grab();
-                            break;
                         case "LOCATION":
                         case "L":
                             GetLocation();
                             break;
                         default:
-                            Console.WriteLine("Your code is broken");
+                            TextWriter.Write("Your code is broken");
                             break;
                     }
                 }
@@ -91,7 +115,7 @@ namespace RPG_Final
         //gets the user input
         public void Help()
         {
-            Console.WriteLine("To move South type s. \nTo move East type e. \nTo move West type w. \nTo move North type n. \nTo buy stuff type b. \nTo eat food type c. \nTo run from battle type r. \nTo Fight the monster type f. \nTo get player stats type ps or stats \nTo check your Inventory type i. \nTo grab an item type g. \nTo check your Location type l.");
+            TextWriter.Write("To move South type s. \nTo move East type e. \nTo move West type w. \nTo move North type n. \nTo buy stuff type b. \nTo eat food type c. \nTo run from battle type r. \nTo Fight the monster type f. \nTo get player stats type ps or stats \nTo check your Inventory type i. \nTo grab an item type g. \nTo check your Location type l.");
         }
 
         public string Move

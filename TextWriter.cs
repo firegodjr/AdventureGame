@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Media;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RPG_Final
 {
@@ -24,7 +22,6 @@ namespace RPG_Final
                 \%2hi 
             will draw '%2hi' in the normal color.)
         */
-        private static Random random = new Random();
 
         public static void Write(string str, int delay = 20)
         {

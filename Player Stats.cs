@@ -17,20 +17,20 @@ namespace RPG_Final
         }
 
         //starting strength
-        int strength = 50;
+        public static int strength = 50;
 
         //starting money
-        int money = 100;
+        public static int money = 100;
 
         //starting hunger
-        int hunger = 100;
+        public static int hunger = 100;
 
         //starting health
-        int health = 100;
+        public static int health = 100;
 
         Weapon equippedWeapon = 0;
 
-        string name = getName();
+        public static string name = getName();
 
         public static string getName()
         {
@@ -47,18 +47,17 @@ namespace RPG_Final
             Console.WriteLine(name + "Your strength is " + strength + "\nYou have " + money + "\nYour hunger is " + hunger + "\nYour health is " + health);
         }
 
-        int apple = 0;
-        int bread = 0;
-        int cake = 0;
-        int woodSword = 0;
-        int ironSword = 0;
-        int goldSword = 0;
-        int diamondSword = 0;
-        int torch = 0;
-        int armor = 0;
-        int magicAmulet = 0;
-
-        int saveRoom = 0;
+        public static int apple = 0;
+        public static int bread = 0;
+        public static int cake = 0;
+        public static int woodSword = 0;
+        public static int ironSword = 0;
+        public static int goldSword = 0;
+        public static int diamondSword = 0;
+        public static int torch = 0;
+        public static int armor = 0;
+        public static int magicAmulet = 0;
+        public static int saveRoom = 0;
 
         public int Apple
         {
