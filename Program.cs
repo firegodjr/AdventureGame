@@ -13,8 +13,7 @@ namespace RPG_Final
         {
             game = new Game();
             GameLoader.LoadWorld(game, "H:\\RPGFinal\\Output\\game.xml");
-            Player_Stats ps = new Player_Stats();
-            game.encounters[0].PerformEncounter(ps, game);
+            game.encounters[2].PerformEncounter(game.player, game);
         }
     }
 }

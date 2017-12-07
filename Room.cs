@@ -23,17 +23,17 @@ namespace RPG_Final
             this.keyTable = keyTable;
         }
 
-        //public bool GetCanProgress(Player_Stats ps, Directions direction)
-        //{
-        //    foreach (Item i in ps.items)
-        //    {
-        //        if (i.type == ItemType.KEY && i.metadata == keyMetas[(int)direction])
-        //        {
-        //            return true;
-        //          }
-        //    }
+        public bool GetCanProgress(Player_Stats ps, Directions direction)
+        {
+            foreach (Item i in ps.inv)
+            {
+                if (i.type == ItemTypes.KEY && i.metadata == keyTable[(int)direction])
+                {
+                    return true;
+                }
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
     }
 }

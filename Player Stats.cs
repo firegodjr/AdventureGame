@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    class Player_Stats
+    public class Player_Stats
     {
 
         //Items in inv
@@ -31,7 +31,6 @@ namespace RPG_Final
         public Player_Stats()
         {
             name = getName();
-            addItems();
         }
 
         public string getName()
@@ -40,18 +39,6 @@ namespace RPG_Final
             Console.WriteLine("Enter your name: ");
             string name = Console.ReadLine();
             return name;
-        }
-
-        public void addItems()
-        {
-            //sets the inv
-            //inv.Add("apple");
-            //inv.Add("apple");
-            //inv.Add("apple");
-           // inv.Add("apple");
-           // inv.Add("apple");
-           // inv.Add("apple");
-           // inv.Add("apple");
         }
 
 
@@ -74,147 +61,7 @@ namespace RPG_Final
             return false;
         }
 
-        public static int apple = 0;
-        public static int bread = 0;
-        public static int cake = 0;
-        public static int woodSword = 0;
-        public static int ironSword = 0;
-        public static int goldSword = 0;
-        public static int diamondSword = 0;
-        public static int torch = 0;
-        public static int armor = 0;
-        public static int magicAmulet = 0;
         public static int saveRoom = 0;
-
-        public int Apple
-        {
-            get
-            {
-                return apple;
-            }
-
-            set
-            {
-                apple = value;
-            }
-        }
-
-        public int Bread
-        {
-            get
-            {
-                return bread;
-            }
-
-            set
-            {
-                bread = value;
-            }
-        }
-
-        public int Cake
-        {
-            get
-            {
-                return cake;
-            }
-
-            set
-            {
-                cake = value;
-            }
-        }
-
-        public int WoodSword
-        {
-            get
-            {
-                return woodSword;
-            }
-
-            set
-            {
-                woodSword = value;
-            }
-        }
-
-        public int IronSword
-        {
-            get
-            {
-                return ironSword;
-            }
-
-            set
-            {
-                ironSword = value;
-            }
-        }
-
-        public int GoldSword
-        {
-            get
-            {
-                return goldSword;
-            }
-
-            set
-            {
-                goldSword = value;
-            }
-        }
-
-        public int DiamondSword
-        {
-            get
-            {
-                return diamondSword;
-            }
-
-            set
-            {
-                diamondSword = value;
-            }
-        }
-
-        public int Torch
-        {
-            get
-            {
-                return torch;
-            }
-
-            set
-            {
-                torch = value;
-            }
-        }
-
-        public int Armor
-        {
-            get
-            {
-                return armor;
-            }
-
-            set
-            {
-                armor = value;
-            }
-        }
-
-        public int MagicAmulet
-        {
-            get
-            {
-                return magicAmulet;
-            }
-
-            set
-            {
-                magicAmulet = value;
-            }
-        }
 
         public int SaveRoom
         {

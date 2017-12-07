@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    class Item
+    public class Item
     {
         public string name;
         public ItemTypes type;
