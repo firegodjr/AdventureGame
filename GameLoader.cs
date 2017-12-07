@@ -18,12 +18,12 @@ namespace RPG_Final
             List<Room> rooms = new List<Room>();
             List<Item> items = new List<Item>();
 
-            while(reader.Read())
+            while (reader.Read())
             {
                 string name = reader.Name;
                 string value = reader.Value;
 
-                switch(name)
+                switch (name)
                 {
                     case "encounter":
 
@@ -48,7 +48,7 @@ namespace RPG_Final
                             attackNames.Add(attack[1]);
                             attackDamages.Add(Convert.ToInt32(attack[2]));
                         }
-                        if(attackNames.Count > 0)
+                        if (attackNames.Count > 0)
                         {
                             reader.ReadEndElement();
                         }
@@ -61,7 +61,7 @@ namespace RPG_Final
                             abilityNames.Add(attack[1]);
                             abilityMods.Add(attack[2]);
                         }
-                        if(abilityNames.Count > 0)
+                        if (abilityNames.Count > 0)
                         {
                             reader.ReadEndElement();
                         }
@@ -72,7 +72,7 @@ namespace RPG_Final
                             string[] itemString = reader.ReadElementContentAsString().Split(':');
                             itemRewards.Add(Convert.ToInt32(itemString[0]));
                         }
-                        if(itemRewards.Count > 0)
+                        if (itemRewards.Count > 0)
                         {
                             reader.ReadEndElement();
                         }

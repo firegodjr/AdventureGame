@@ -8,31 +8,33 @@ namespace RPG_Final
 {
     class Player_Stats
     {
-        public enum Weapon
-        {
-            WOODSWORD,
-            IRONSWORD,
-            GOLDSWORD,
-            DIAMONDSWORD
-        }
+
+        //Items in inv
+        public List<Item> inv = new List<Item>();
 
         //starting strength
-        public static int strength = 50;
+        public int strength = 50;
 
         //starting money
-        public static int money = 100;
+        public int money = 100;
 
         //starting hunger
-        public static int hunger = 100;
+        public int hunger = 100;
 
         //starting health
-        public static int health = 100;
+        public int health = 100;
 
-        Weapon equippedWeapon = 0;
+        Item equippedWeapon = null;
 
-        public static string name = getName();
+        public string name;
 
-        public static string getName()
+        public Player_Stats()
+        {
+            name = getName();
+            addItems();
+        }
+
+        public string getName()
         {
             //gets name from user
             Console.WriteLine("Enter your name: ");
@@ -40,11 +42,36 @@ namespace RPG_Final
             return name;
         }
 
+        public void addItems()
+        {
+            //sets the inv
+            //inv.Add("apple");
+            //inv.Add("apple");
+            //inv.Add("apple");
+           // inv.Add("apple");
+           // inv.Add("apple");
+           // inv.Add("apple");
+           // inv.Add("apple");
+        }
 
-        public static void beginningMessage(string name, int strength, int money, int hunger, int health)
+
+        public void beginningMessage(string name, int strength, int money, int hunger, int health)
         {
             //prints 1st message at beginning of game
             Console.WriteLine(name + "Your strength is " + strength + "\nYou have " + money + "\nYour hunger is " + hunger + "\nYour health is " + health);
+        }
+
+        public bool RemoveItem(string itemname)
+        {
+            foreach(Item i in inv)
+            {
+                if(i.name.ToLower() == itemname.ToLower())
+                {
+                    inv.Remove(i);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static int apple = 0;
@@ -267,7 +294,7 @@ namespace RPG_Final
             }
         }
 
-        internal Weapon EquippedWeapon
+        public Item EquippedWeapon
         {
             get
             {

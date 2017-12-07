@@ -10,17 +10,8 @@ namespace RPG_Final
     {
         public Encounter[] encounters;
         public Room[] rooms;
+        public Item[] items;
 
-        public int enCounter()
-        {
-            int encounter = 0;
-            int cnt = 0;
-            //counts the encounter
-            for (int x = 0; x < encounter; x++)
-            {
-                cnt += encounter;
-            }
-            return cnt;
-        }
+        //public Player_Stats player = new Player_Stats();
     }
 }
