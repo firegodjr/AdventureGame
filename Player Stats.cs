@@ -24,7 +24,7 @@ namespace RPG_Final
         //starting health
         public int health = 100;
 
-        Item equippedWeapon = null;
+        Item equippedWeapon = new Item("Fists", ItemTypes.WEAPON, 0);
 
         public string name;
 
@@ -50,15 +50,28 @@ namespace RPG_Final
 
         public bool RemoveItem(string itemname)
         {
-            foreach(Item i in inv)
+            foreach (Item i in inv)
             {
-                if(i.name.ToLower() == itemname.ToLower())
+                if (i.name.ToLower() == itemname.ToLower())
                 {
                     inv.Remove(i);
                     return true;
                 }
             }
             return false;
+        }
+
+        public int GetItemCount(string name)
+        {
+            int count = 0;
+            foreach(Item i in inv)
+            {
+                if(i.name.ToLower() == name)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
 
         public static int saveRoom = 0;
