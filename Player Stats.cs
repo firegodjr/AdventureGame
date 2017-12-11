@@ -13,7 +13,7 @@ namespace RPG_Final
         public List<Item> inv = new List<Item>();
 
         //starting strength
-        public int strength = 50;
+        public int strength = 1;
 
         //starting money
         public int money = 100;
@@ -24,7 +24,13 @@ namespace RPG_Final
         //starting health
         public int health = 100;
 
-        Item equippedWeapon = new Item("Fists", ItemTypes.WEAPON, 0);
+        //the room the player is currently in
+        public int currentRoom = 0;
+
+        //the player's defense
+        public int defense = 0;
+
+        Item equippedWeapon = new Item("Fists", ItemTypes.WEAPON, 1);
 
         public string name;
 
@@ -64,9 +70,9 @@ namespace RPG_Final
         public int GetItemCount(string name)
         {
             int count = 0;
-            foreach(Item i in inv)
+            foreach (Item i in inv)
             {
-                if(i.name.ToLower() == name)
+                if (i.name.ToLower() == name)
                 {
                     count++;
                 }

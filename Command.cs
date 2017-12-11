@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    class Command
+    public static class Command
     {
-        string move = "";
+        public static string move = "";
 
         //gets the user 
-        public void Input(Player_Stats player)
+        public static void Input(Player_Stats player)
         {
             int x = 0;
             while (x == 0)
@@ -49,7 +49,7 @@ namespace RPG_Final
                             break;
                         case "BUY":
                         case "B":
-                            Buy();
+                            Buy(player, Program.game);
                             break;
                         case "CONSUME":
                         case "C":
@@ -71,15 +71,23 @@ namespace RPG_Final
                         case "PS":
                         case "STATS":
                         case "PLAYERSTATS":
-                            Stats();
+                            Stats(player);
                             break;
                         case "INVENTORY":
                         case "I":
-                            CheckInventory();
+                            CheckInventory(player);
                             break;
                         case "LOCATION":
                         case "L":
                             GetLocation();
+                            break;
+                        case "HEAL":
+                        case "H":
+                            Heal(player);
+                            break;
+                        case "M":
+                        case "Map":
+                            DisplayMap(player);
                             break;
                         default:
                             TextWriter.Write("Your code is broken");
@@ -90,32 +98,58 @@ namespace RPG_Final
         }
 
         //gets player stats
-        public void Stats()
+        public static void Stats(Player_Stats player)
+        {
+            int strength = player.strength;
+            int money = player.money;
+            int hunger = player.hunger;
+            int health = player.health;
+            int defense = player.defense;
+
+            TextWriter.Write("Health:%3\t" + health+"%0\n"+
+                "Strength:%3\t" + strength + "%0\n" +
+                "Hunger:%3\t" + hunger + "%0\n" +
+                "Money:%3\t" + money + "%0\n" +
+                "Defense:%3\t" + defense + "%0\n");
+        }
+
+        //gets player stats
+        public static void CheckInventory(Player_Stats player)
+        {
+            for (int x = 0; x < player.inv.Count; x++)
+            {
+                TextWriter.Write(player.inv[x].name);
+            }
+        }
+
+        //gets player stats
+        public static void GetLocation()
         {
 
         }
 
         //gets player stats
-        public void CheckInventory()
+        public static void DisplayMap(Player_Stats player)
         {
-
-        }
-
-        //gets player stats
-        public void GetLocation()
-        {
-
+            if (player.GetItemCount("Map") != 0)
+            {
+                //TODO: map code
+            }
+            else
+            {
+                TextWriter.Write("You do not have a map. To get one buy one from the shop");
+            }
         }
 
         //gets the user input
-        public void Help()
+        public static void Help()
         {
-            TextWriter.Write("To move South type s. \nTo move East type e. \nTo move West type w. \nTo move North type n. \nTo buy stuff type b. \nTo eat food type c. \nTo run from battle type r. \nTo Exit the game type exit or stop. \nTo get player stats type ps or stats \nTo check your Inventory type i. \nTo grab an item type g. \nTo check your Location type l.");
+            TextWriter.Write("To move South type '%4S%0'. \nTo move East type '%4E%0'. \nTo move West type '%4W%0'. \nTo move North type '%4N%0'. \nTo buy stuff type '%4B%0'. \nTo eat food type '%4C%0'. \nTo run from battle type '%4R%0'. \nTo Exit the game type exit or stop. \nTo get player stats type '%4ps%0' or stats \nTo check your Inventory type '%4I%0'. \nTo grab an item type '%4G%0'. \nTo check your Location type '%4L%0'. \n To look at the map type '%4M%0'.");
         }
 
 
         //user eats
-        public void Eat(Player_Stats player)
+        public static void Eat(Player_Stats player)
         {
             string foodInput = "";
             TextWriter.Write("Would you like to consume apple(A), bread(B), or cake(C)");
@@ -143,17 +177,83 @@ namespace RPG_Final
             }
         }
 
-        //opens the user shop 
-        public void Buy()
+        //user eats
+        public static void Heal(Player_Stats player)
         {
-            TextWriter.Write("What weapon would you like to buy: \n1.Wood Sword: Damage = +5, Cost = $15\n2.Iron Sword: Damage = +10, Cost = $30\n3.Master Sword: Damage = +15, Cost = $60\n4.Big Black Sword: Damage = +25, Cost = $100\n5.Armor: +5 Damage Redcued, Cost = $100\n6Magic Amulet: 1 Revive, Cost = $75");
+            string Healinput = "";
+            TextWriter.Write("Would you like to use a health potion? y for yes");
+            Healinput = Console.ReadLine();
+            if (Healinput.ToLower() == "y" || Healinput.ToLower() == "yes")
+            {
+                if (player.RemoveItem("HealthPotion"))
+                {
+                    player.health += 20;
+                }
+            }
         }
 
-        public string Move
+        //opens the user shop 
+        public static void Buy(Player_Stats ps, Game game)
+        {
+            TextWriter.Write(
+                "What would you like to buy?\n\n" + 
+                "%1Item Name\tCost\tEffects%0\n" + 
+                "1\\.Wood Sword\t %5$15%0\t%2+5atk%0\n" + 
+                "2\\.Iron Sword\t %5$30%0\t%2+10atk%0\n" + 
+                "3\\.Master Sword\t %5$60%0\t%2+15atk%0\n" + 
+                "4\\.Necreant Blade %5$100%0\t%2+25atk%0\n" + 
+                "5\\.Health Potion\t %5$15%0\t%4+20 Health on Use%0\n" + 
+                "6\\.Magic Armor\t %5$100%0\t%4+5 Defense%0\n" +
+                "7\\.Area Map\t %5$100%0\t%4View the area map with 'M'%0\n" + 
+                "Type '%5exit%0' to exit the shop.\n", 10);
+
+            int input = Convert.ToInt32(char.GetNumericValue(Console.ReadKey().KeyChar));
+            Console.CursorLeft--;
+            Console.Write(" ");
+            Console.CursorLeft--;
+
+            switch(input)
+            {
+                case 1:
+                    PurchaseItem(ps, game.GetItemFromName("wooden sword"), 15);
+                    break;
+                case 2:
+                    PurchaseItem(ps, game.GetItemFromName("iron sword"), 30);
+                    break;
+                case 3:
+                    PurchaseItem(ps, game.GetItemFromName("master sword"), 60);
+                    break;
+                case 4:
+                    PurchaseItem(ps, game.GetItemFromName("necreant blade"), 100);
+                    break;
+                case 5:
+                    PurchaseItem(ps, game.GetItemFromName("health potion"), 15);
+                    break;
+                case 6:
+                    //TODO: just increase player defense
+                    break;
+                case 7:
+                    //TODO: enable player map
+                    break;
+            }
+        }
+
+        private static void PurchaseItem(Player_Stats ps, Item item, int cost)
+        {
+            if(ps.money >= cost)
+            {
+                ps.money -= cost;
+                ps.inv.Add(item);
+                TextWriter.Write($"%5{cost}%0 gold removed.");
+                TextWriter.Write($"You got the %4{item.name}%0!`");
+            }
+        }
+
+        public static string Move
         {
             get
             {
-                return move;
+                return move; 
             }
 
             set

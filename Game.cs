@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    class Game
+    public class Game
     {
         public Encounter[] encounters;
         public Room[] rooms;

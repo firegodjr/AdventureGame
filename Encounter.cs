@@ -46,10 +46,8 @@ namespace RPG_Final
         //Does the encounter
         public void PerformEncounter(Player_Stats ps, Game game)
         {
-            if(!completed)
+            if (!completed)
             {
-                int enemyRepeat = 0;
-                int playerRepeat = 0;
                 Random random = new Random();
                 int currEnemyHealth = enemyHealth;
                 TextWriter.Write(announcement);
@@ -121,16 +119,16 @@ namespace RPG_Final
                         }
                     }
 
-                    if(playerRan)
+                    if (playerRan)
                     {
                         break;
                     }
 
                     //Randomly make the player or enemy attack first
-                    if(random.Next(2) == 0)
+                    if (random.Next(2) == 0)
                     {
                         PerformPlayerAttack(ps, random, ref currEnemyHealth);
-                        if(currEnemyHealth > 0)
+                        if (currEnemyHealth > 0)
                         {
                             PerformEnemyAttack(ps, random, ref currEnemyHealth);
                         }
@@ -138,7 +136,7 @@ namespace RPG_Final
                     else
                     {
                         PerformEnemyAttack(ps, random, ref currEnemyHealth);
-                        if(ps.health > 0)
+                        if (ps.health > 0)
                         {
                             PerformPlayerAttack(ps, random, ref currEnemyHealth);
                         }
@@ -153,7 +151,7 @@ namespace RPG_Final
 
                         TextWriter.Write($"Your strength increases to %3{ps.strength}%0!");
                         TextWriter.Write($"You gain %5{rewardGold} gold%0!");
-                        foreach(int i in itemrewards)
+                        foreach (int i in itemrewards)
                         {
                             string itemname = game.items[i].name.ToLower();
                             bool useAn = itemname[0] == 'a' || itemname[0] == 'e' || itemname[0] == 'i' || itemname[0] == 'o' || itemname[0] == 'u';
@@ -179,11 +177,13 @@ namespace RPG_Final
             TextWriter.Write(
                 $"\n%1------------------%0\n\n" +
                 $"Player Health: %3{ps.health}%0\n" +
-                $"Player Attack: %4{GetDamage(ps)}%0\n" +
+                $"Player Strength: %3{ps.strength}%0\n" +
+                $"Player Weapon Attack: %4{ps.EquippedWeapon.metadata}%0\n" +
+                $"Total Attack Power: %4{GetDamage(ps)}%0\n" +
                 $"\nWhat will you do\\?\n" +
                 $"'%3A%0' - Attack\\! ({ps.EquippedWeapon.name})\n" +
-                $"{(canDrinkPotion ? $"'%3H%0' - Drink Health Potion (You have {ps.GetItemCount("health potion")}" : "")})" + 
-                $"{(canRun ? "\n'%3R%0' - Run Away (Lose a random amount of gold\\!)" : "")}" + 
+                $"{(canDrinkPotion ? $"'%3H%0' - Drink Health Potion (You have {ps.GetItemCount("health potion")}" : "")})" +
+                $"{(canRun ? "\n'%3R%0' - Run Away (Lose a random amount of gold\\!)" : "")}" +
                 "\n%1>>>%0 ", 10);
         }
 
@@ -231,7 +231,7 @@ namespace RPG_Final
             int enemyDamage = 0;
             int enemyAttack = Convert.ToInt32(random.Next(attackProbabilities.Sum() + abilityProbabilities.Sum()));
             int attIndex = GetIndexFromProbability(enemyAttack);
-            if(attIndex != -1)
+            if (attIndex != -1)
             {
                 if (attIndex >= attackProbabilities.Length)
                 {
@@ -247,7 +247,7 @@ namespace RPG_Final
                         enemyDamage = 0;
                     }
 
-                    TextWriter.Write($"%5{enemyName}%0 %4{attackNames[attIndex]}%0 for %5{enemyDamage}%0 point{(enemyDamage > 1 ? "s" : "")} of damage!");
+                    TextWriter.Write($"%5{enemyName}%0 %4{attackNames[attIndex]}%0 for %5{enemyDamage - ps.defense}%0 point{(enemyDamage > 1 ? "s" : "")} of damage!");
                 }
             }
 
@@ -258,12 +258,12 @@ namespace RPG_Final
         private int AnnouncePlayerAttack(Player_Stats ps, Random random, int enemyhealth)
         {
             int playerDamage = Convert.ToInt32(GetDamage(ps) + (random.Next(7) - 3));
-            if(playerDamage <= 0)
+            if (playerDamage <= 0)
             {
                 playerDamage = random.Next(3);
             }
 
-            if(playerDamage < 0)
+            if (playerDamage < 0)
             {
                 playerDamage = 0;
             }
@@ -282,27 +282,27 @@ namespace RPG_Final
         //
         public int GetDamage(Player_Stats ps)
         {
-            return Convert.ToInt32(1 + ps.EquippedWeapon.metadata * ((float)ps.strength / 5));
+            return Convert.ToInt32(ps.EquippedWeapon.metadata + ps.strength);
         }
 
         //Gets an attack or ability index given a probability
         public int GetIndexFromProbability(int randomnum)
         {
             int currAttackProbTotal = 0;
-            for(int i = 0; currAttackProbTotal <= randomnum; ++i)
+            for (int i = 0; currAttackProbTotal <= randomnum; ++i)
             {
-                if(i < attackProbabilities.Length)
+                if (i < attackProbabilities.Length)
                 {
                     currAttackProbTotal += attackProbabilities[i];
-                    if(currAttackProbTotal > randomnum)
+                    if (currAttackProbTotal > randomnum)
                     {
                         return i;
                     }
                 }
-                else if(i - attackProbabilities.Length < abilityProbabilities.Length)
+                else if (i - attackProbabilities.Length < abilityProbabilities.Length)
                 {
                     currAttackProbTotal += attackProbabilities[i - attackProbabilities.Length];
-                    if(currAttackProbTotal > randomnum)
+                    if (currAttackProbTotal > randomnum)
                     {
                         return i;
                     }
@@ -320,7 +320,7 @@ namespace RPG_Final
         {
             string mod = abilityModifier.Substring(0, 1);
             int amnt = Convert.ToInt32(abilityModifier.Substring(1));
-            switch(mod)
+            switch (mod)
             {
                 case "h":
                     health += amnt;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPG_Final
 {
-    enum ItemTypes
+    public enum ItemTypes
     {
         FOOD,
         HEALTH,
