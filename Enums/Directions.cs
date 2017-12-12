@@ -11,6 +11,7 @@ namespace RPG_Final
         NORTH,
         SOUTH,
         EAST,
-        WEST
+        WEST,
+        NONE
     }
 }

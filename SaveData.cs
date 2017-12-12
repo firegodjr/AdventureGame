@@ -12,10 +12,12 @@ namespace RPG_Final
         Dictionary<string, bool> bools = new Dictionary<string, bool>();
         Dictionary<string, int> ints = new Dictionary<string, int>();
         Dictionary<string, double> doubles = new Dictionary<string, double>();
+        Dictionary<string, string> strings = new Dictionary<string, string>();
 
         private const int BOOL = 0,
                           INT = 1,
-                          DOUBLE = 2;
+                          DOUBLE = 2,
+                          STRING = 3;
 
         public void AddSetting(string settingName, bool value)
         {
@@ -30,6 +32,11 @@ namespace RPG_Final
         public void AddSetting(string settingName, double value)
         {
             doubles.Add(settingName, value);
+        }
+
+        public void AddSetting(string settingName, string value)
+        {
+            strings.Add(settingName, value);
         }
 
         public bool GetBoolValue(string settingName)
@@ -73,6 +80,17 @@ namespace RPG_Final
                     Set(settingName, default(double));
                 }
             }
+            else if(typeof(T) == typeof(string))
+            {
+                if(strings.ContainsKey(settingName))
+                {
+                    value = (T)Convert.ChangeType(strings[settingName], typeof(T));
+                }
+                else
+                {
+                    Set(settingName, "");
+                }
+            }
 
             return value;
         }
@@ -91,7 +109,7 @@ namespace RPG_Final
 
         public void Set(string settingName, int value)
         {
-            if (bools.ContainsKey(settingName))
+            if (ints.ContainsKey(settingName))
             {
                 ints[settingName] = value;
             }
@@ -106,6 +124,18 @@ namespace RPG_Final
             if (doubles.ContainsKey(settingName))
             {
                 doubles[settingName] = value;
+            }
+            else
+            {
+                AddSetting(settingName, value);
+            }
+        }
+
+        public void Set(string settingName, string value)
+        {
+            if (strings.ContainsKey(settingName))
+            {
+                strings[settingName] = value;
             }
             else
             {
@@ -166,6 +196,13 @@ namespace RPG_Final
             }
             writer.WriteEndElement();
 
+            writer.WriteStartElement("strings");
+            foreach(KeyValuePair<string, string> keyval in strings)
+            {
+                writer.WriteElementString(keyval.Key, keyval.Value.ToString());
+            }
+            writer.WriteEndElement();
+
             writer.WriteEndElement();
 
             writer.WriteEndDocument();
@@ -175,7 +212,16 @@ namespace RPG_Final
 
         public void LoadXML(string filepath)
         {
-            XmlReader reader = XmlReader.Create(filepath);
+            XmlReader reader;
+            try
+            {
+                reader = XmlReader.Create(filepath);
+            }
+            catch
+            {
+                TextWriter.Write("No save data found.");
+                return;
+            }
 
             int readerstage = 0;
 
@@ -197,6 +243,10 @@ namespace RPG_Final
                         else if (reader.Name == "doubles")
                         {
                             readerstage = DOUBLE;
+                        }
+                        else if (reader.Name == "strings")
+                        {
+                            readerstage = STRING;
                         }
                         else if (reader.Name != "")
                         {
@@ -220,6 +270,12 @@ namespace RPG_Final
                                     if (!doubles.ContainsKey(name))
                                     {
                                         doubles.Add(name, Convert.ToDouble(value));
+                                    }
+                                    break;
+                                case STRING:
+                                    if(!doubles.ContainsKey(name))
+                                    {
+                                        strings.Add(name, Convert.ToString(value));
                                     }
                                     break;
                             }

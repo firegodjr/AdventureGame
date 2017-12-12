@@ -93,10 +93,10 @@ namespace RPG_Final
 
                         int[] keyMetas = new int[]
                         {
-                            Convert.ToInt32(navStrings[0]),
-                            Convert.ToInt32(navStrings[1]),
-                            Convert.ToInt32(navStrings[2]),
-                            Convert.ToInt32(navStrings[3])
+                            Convert.ToInt32(keyStrings[0]),
+                            Convert.ToInt32(keyStrings[1]),
+                            Convert.ToInt32(keyStrings[2]),
+                            Convert.ToInt32(keyStrings[3])
                         };
 
                         int[] navTable = new int[]
